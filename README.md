@@ -1,5 +1,5 @@
 # node-rest-server
-Secure REST API server example with Nodejs, Express, mongoose, JsonWebToken
+Secure REST API server example with Nodejs, Express, mongoose & JsonWebToken
 <h2>Installing on local machine</h2>
 <h4>Please make sure you have node.js installed on your machine</h4>
 If you don't have, <a href="https://nodejs.org/" >click here...</a>
