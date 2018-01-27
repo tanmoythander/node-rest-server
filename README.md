@@ -14,57 +14,40 @@ and,
 
 you should see some version info in return.<br><br>
 
-<b>2. install global packages</b>(run on any directory, for development)
 
-	npm install -g nodemon
-
-in case of mac, you might need to mention "sudo"<br><br>
-
-
-<b>3. now go to the directory where you want to place the project files using git bash (terminal for mac)</b><br>
+<b>2. now go to the directory where you want to place the project files using git bash (terminal for mac)</b><br>
 run the command
 
 	git clone URL
 
 here URL is the http url you get from the repository page, <a href="https://github.com/tanmoythander/node-rest-server">Click here to clone</a><br><br>
 
-<b>4. now navigate to the project directory with cmd (terminal for mac)</b><br>
+<b>3. now navigate to the project directory with cmd (terminal for mac)</b><br>
 run the command
 
 	npm install
 	
-wait for it to be completed. It usually takes 5-10 minutes to complete.<br>
+wait for it to be completed. It usually takes a minute to complete.<br>
 It will download all the dependencies, build the project and serve the build on browser<br><br>
 
-<h2>Using the gulp commands</h2>
 
-<b>1. Serve from source with watch (Development Mode)</b>
-
-	gulp
-
-you should see the browser window pointing on localhost:3000<br><br>
-
-<b>2. Build the source (Deployment Mode)</b>
-
-	gulp build
-
-it will delete previous build !!!<br><br>
-
-<b>3. Serve from source without watch (Source Testing Mode)</b>
-
-	gulp server
-
-you should see the browser window pointing on localhost:3000<br><br>
-
-<b>4. Serve from _build without watch (Build Testing Mode)</b>
-
-	gulp server-build
-
-you should see the browser window pointing on localhost:3000<br><br>
 
 <h2>Developer Hint</h2>
 
-Please change your editor configuration like below before you start development
+<b>Install nodemon</b>(run on any directory, recommended for development)
+
+	npm install -g nodemon
+
+in case of mac, you might need to mention "sudo"<br><br>
+<b>Now navigate to the project directory with cmd (terminal for mac)</b><br>
+run the command
+
+	nodemon ./bin/www
+	
+It will serve the project and restart on any file change<br><br>
+
+
+<b>Please change your editor configuration like below before you start development</b>
 
 <b>Indent character</b>: "\t" (tab)
 
