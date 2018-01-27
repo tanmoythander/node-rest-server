@@ -53,7 +53,8 @@ run the command
 
 	nodemon ./bin/www
 	
-It will serve the project and restart on any file change<br><br>
+It will serve the project and restart on any file change<br>
+It's good to remember that, <b>./bin/www</b> is the entry point to the app.<br><br>
 
 
 <b>Please change your editor configuration like below before you start development</b>
