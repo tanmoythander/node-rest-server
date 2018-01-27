@@ -30,7 +30,7 @@ run the command
 wait for it to be completed. It usually takes a minute to complete.<br>
 It will download all the dependencies, build the project and serve the build on browser<br><br>
 
-<b>4. Now run the command
+<b>4. Now run the command</b>
 
 	npm start	
 or,
