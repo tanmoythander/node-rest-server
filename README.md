@@ -37,7 +37,7 @@ or,
 
 	node ./bin/www
 	
-It will serve the project and restart on any file change<br><br>
+It will serve the project<br><br>
 
 
 
