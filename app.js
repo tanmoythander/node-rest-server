@@ -21,7 +21,16 @@ var token = require('./routes/token');
 // Require mongoose
 var mongoose = require('mongoose');
 // Connect to mongoDB
-mongoose.connect('mongodb://<USERNAME>:<PASSWORD>@quantic-shard-00-00-xveg8.mongodb.net:27017,quantic-shard-00-01-xveg8.mongodb.net:27017,quantic-shard-00-02-xveg8.mongodb.net:27017/<DATABASE_NAME>?ssl=true&replicaSet=quantic-shard-0&authSource=admin');
+mongoose.connect(
+  '<SRV or URI ADDRESS>'
+).then(function() {
+    console.log('Database connection successful !!!');
+  },
+  function(err) {
+    console.log('Database connection failed');
+    console.log(err);
+  }
+);
 
 // CORS Config
 var whitelist = [
