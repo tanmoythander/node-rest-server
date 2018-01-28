@@ -24,14 +24,16 @@ var mongoose = require('mongoose');
 var dbOptions = {
   keepAlive: 200,
   autoReconnect: true,
-  reconnectInterval: 3000
+  reconnectInterval: 3000,
+  useMongoClient: true
 };
 var reconnectTries = 0;
 
 // Connect to mongoDB
 function dbConnect() {
   mongoose.connect(
-    'CONNECTION SRV / URI',
+    // Replace CONNECTION_URI with the one you have
+    'CONNECTION_URI',
     dbOptions
   ).then(function() {
     console.log('Database connection successful !!!');
