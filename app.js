@@ -5,6 +5,7 @@ var cors = require('cors');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var delay = require('delay');
 
 
 //initialize mongoose schemas
@@ -20,17 +21,34 @@ var token = require('./routes/token');
 
 // Require mongoose
 var mongoose = require('mongoose');
+var dbOptions = {
+  keepAlive: 200,
+  autoReconnect: true,
+  reconnectInterval: 3000
+};
+var reconnectTries = 0;
+
 // Connect to mongoDB
-mongoose.connect(
-  '<SRV or URI ADDRESS>'
-).then(function() {
+function dbConnect() {
+  mongoose.connect(
+    'CONNECTION SRV / URI',
+    dbOptions
+  ).then(function() {
     console.log('Database connection successful !!!');
-  },
-  function(err) {
+  }, function(err) {
     console.log('Database connection failed');
-    console.log(err);
-  }
-);
+    console.log(err.code);
+
+    reconnectTries++;
+    console.log('Reconnecting after 3 seconds');
+    console.log('Reconnect trial: '+reconnectTries);
+    delay(3000).then(function() {
+      // enable recurtion
+      dbConnect();
+    });
+  });
+}
+dbConnect();
 
 // CORS Config
 var whitelist = [
