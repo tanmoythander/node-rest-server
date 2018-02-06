@@ -27,8 +27,8 @@ run the command
 
 	npm install
 	
-wait for it to be completed. It usually takes a minute to complete.<br>
-It will download all the dependencies, build the project and serve the build on browser<br><br>
+wait for it to be completed. It usually takes a minute or less to complete.<br>
+It will download all the dependencies.<br><br>
 
 <b>4. Now run the command</b>
 
@@ -37,7 +37,7 @@ or,
 
 	node ./bin/www
 	
-It will serve the project<br><br>
+It will serve the project on default port (3484). <br><br>
 
 
 
