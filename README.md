@@ -43,7 +43,7 @@ It will serve the project on default port (3484). <br><br>
 
 <h2>API Documentation</h2>
 
-Find the API documentation at, <a href="https://api.tanmoythander.info/node-rest-server">api.tanmoythander.info/node-rest-server</a><br><br>
+Find the API documentation at, <a href="https://api.tanmoythander.info/node-rest-server">here</a><br><br>
 
 <h2>Developer Hint</h2>
 
