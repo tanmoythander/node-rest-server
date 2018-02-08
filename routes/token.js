@@ -19,12 +19,12 @@ var createHash = function(password){
 
 
 /**
- * @api {post} /user/login User Login
+ * @api {post} /token/user/login User Login
  * @apiVersion 0.0.1
  * @apiGroup Authentication
  * @apiName UserLogin
  * @apiExample Example usage:
- *   url: http://localhost:3484/user/login
+ *   url: http://localhost:3484/token/user/login
  *
  *   body:
  *   {
@@ -80,12 +80,12 @@ router.route('/user/login')
 	});
 
 /**
- * @api {post} /user/signup User Signup
+ * @api {post} /token/user/signup User Signup
  * @apiVersion 0.0.1
  * @apiGroup Authentication
  * @apiName UserSignup
  * @apiExample Example usage:
- *   url: http://localhost:3484/user/signup
+ *   url: http://localhost:3484/token/user/signup
  *
  *   body:
  *   {
@@ -153,12 +153,12 @@ router.route('/user/signup')
 	});
 
 /**
- * @api {post} /admin/login Admin Login
+ * @api {post} /token/admin/login Admin Login
  * @apiVersion 0.0.1
  * @apiGroup Authentication
  * @apiName AdminLogin
  * @apiExample Example usage:
- *   url: http://localhost:3484/admin/login
+ *   url: http://localhost:3484/token/admin/login
  *
  *   body:
  *   {
@@ -214,12 +214,12 @@ router.route('/admin/login')
 	});
 
 /**
- * @api {post} /admin/signup Admin Signup
+ * @api {post} /token/admin/signup Admin Signup
  * @apiVersion 0.0.1
  * @apiGroup Authentication
  * @apiName AdminSignup
  * @apiExample Example usage:
- *   url: http://localhost:3484/admin/signup
+ *   url: http://localhost:3484/token/admin/signup
  *
  *   body:
  *   {

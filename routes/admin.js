@@ -3,45 +3,12 @@ var router = express.Router();
 var mongoose = require('mongoose');
 mongoose.Promise = require('q').Promise;
 var assert = require('assert');
-var jwt = require('jsonwebtoken');
-var jwtSecret = require('./../secrets/jwt');
+var auth = require('./../components/auth');
 var Admin = mongoose.model('Admin');
 
 
-
-//Used for routes that must be authenticated.
-function isAuthenticated (req, res, next) {
-
-	var token = req.headers['x-access-key'];
-
-	// decode token
-  if (token) {
-
-    // verifies secret and checks exp
-    jwt.verify(token, jwtSecret.admin.secret, function(err, decoded) {      
-      if (err) {
-        return res.status(400).send({
-        	state: 'failure',
-        	message: 'Token is invalid'
-        });
-      } else {
-        // if everything is good, save to request for use in other routes
-        req.decoded = decoded._doc;
-        return next();
-      }
-    });
-  }
-  else {
-  	// if the admin is not authenticated then redirect him to the login page
-		return res.status(400).send({
-			state: 'failure',
-			message: 'No token provided'
-		});
-  }	
-};
-
 //Register the authentication middleware
-router.use('/profile', isAuthenticated);
+router.use('/profile', auth.verifyAdmin);
 
 
 /////////////////
@@ -54,6 +21,16 @@ router.use('/profile', isAuthenticated);
 //  update profile
 router.route('/profile')
 	// get profile
+	/**
+	 * @api {get} /admin/profile Get admin profile
+	 * @apiHeader {String} access-key Admin authentication token.
+	 * @apiVersion 0.0.1
+	 * @apiGroup AdminProfile
+	 * @apiName GetAdminProfile
+	 * @apiExample Example usage:
+	 *   url: http://localhost:3484/admin/profile
+	 *
+	 */
 	.get(function(req, res) {
 		Admin.findById(req.decoded._id, function(err, admin) {
 			if (err) {
@@ -72,6 +49,33 @@ router.route('/profile')
 		});
 	})
 	// Update profile
+	/**
+	 * @api {put} /admin/profile Update admin profile
+	 * @apiHeader {String} access-key Admin authentication token.
+	 * @apiVersion 0.0.1
+	 * @apiGroup AdminProfile
+	 * @apiName UpdateAdminProfile
+	 * @apiExample Example usage:
+	 *   url: http://localhost:3484/admin/profile
+	 *
+	 *   body:
+	 *   {
+	 *     "name": "John Doe",
+	 *     "profile": {
+	 *       "address": "Sylhet, BD",
+	 *       "company": "Owlette",
+	 *       "phone": "+8801413667755",
+	 *       "dob": "Thu Dec 16 1971 00:00:00 GMT+0600 (+06)"
+	 *     }
+	 *   }
+	 *
+	 * @apiParam {String} name Admin's name.
+	 * @apiParam {Object} profile Profile object.
+	 * @apiParam {String} profile.address Address.
+	 * @apiParam {String} profile.company Company.
+	 * @apiParam {String} profile.phone Phone number.
+	 * @apiParam {Date} profile.dob Date of birth.
+	 */
 	.put(function(req, res) {
 		Admin.findById(req.decoded._id, function(err, admin) {
 			if (err) {

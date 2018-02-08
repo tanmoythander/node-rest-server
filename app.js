@@ -27,24 +27,57 @@ var dbOptions = {
   reconnectInterval: 3000,
   useMongoClient: true
 };
-var reconnectTries = 0;
 
-// Connect to mongoDB
+var reconnectTries = 0;
+var trialDelay = 1;
+
+function delayString(seconds) {
+  var sec = seconds % 60;
+  seconds -= sec;
+  var min = seconds / 60;
+  var temp = min;
+  min %= 60;
+  var hour = (temp - min) / 60;
+
+  var str = '';
+  if (hour>0) {
+    str += hour;
+    str += ' hour'
+    if (hour>1) str += 's';
+    if (min>0 || sec>0) str += ', ';
+  }
+  if (min>0) {
+    str += min;
+    str += ' minute'
+    if (min>1) str += 's';
+    if (sec>0) str += ', ';
+  }
+  if (sec>0) {
+    str += sec;
+    str += ' second'
+    if (sec>1) str += 's';
+  }
+  return str; 
+}
 function dbConnect() {
+  console.log('Connecting database ...');
   mongoose.connect(
-    // Replace CONNECTION_URI with the one you have
+    // Replace CONNECTION_URI with your connection uri
     'CONNECTION_URI',
     dbOptions
   ).then(function() {
     console.log('Database connection successful !!!');
+    console.log('Server is fully functional');
   }, function(err) {
     console.log('Database connection failed');
-    console.log(err.code);
 
     reconnectTries++;
-    console.log('Reconnecting after 3 seconds');
+    console.log('Reconnecting after '+delayString(trialDelay));
     console.log('Reconnect trial: '+reconnectTries);
-    delay(3000).then(function() {
+    console.log('');
+    delay(trialDelay*1000).then(function() {
+      trialDelay += trialDelay;
+      if (trialDelay>7200) trialDelay = 7200;
       // enable recurtion
       dbConnect();
     });
