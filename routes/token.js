@@ -18,6 +18,23 @@ var createHash = function(password){
 };
 
 
+/**
+ * @api {post} /user/login User Login
+ * @apiVersion 0.0.1
+ * @apiGroup Authentication
+ * @apiName UserLogin
+ * @apiExample Example usage:
+ *   url: http://localhost:3484/user/login
+ *
+ *   body:
+ *   {
+ *     "email": "example@example.com",
+ *     "pass": "thisIsPassword"
+ *   }
+ *
+ * @apiParam {String} email Users email.
+ * @apiParam {String} pass Users password.
+ */
 router.route('/user/login')
 	.post(function(req, res) {
 		User.findOne({ "email" : req.body.email }, function(err, user) {
@@ -62,6 +79,27 @@ router.route('/user/login')
 		});
 	});
 
+/**
+ * @api {post} /user/signup User Signup
+ * @apiVersion 0.0.1
+ * @apiGroup Authentication
+ * @apiName UserSignup
+ * @apiExample Example usage:
+ *   url: http://localhost:3484/user/signup
+ *
+ *   body:
+ *   {
+ *     "name": "John Doe",
+ *     "email": "example@example.com",
+ *     "dob": "Thu Dec 16 1971 00:00:00 GMT+0600 (+06)",
+ *     "pass": "thisIsPassword"
+ *   }
+ *
+ * @apiParam {String} name Users name.
+ * @apiParam {String} email Users email.
+ * @apiParam {Date} dob Users date of birth.
+ * @apiParam {String} pass Users password.
+ */
 router.route('/user/signup')
 	.post(function(req, res) {
 		User.findOne({ "email": req.body.email }, function(err, user) {
@@ -114,6 +152,23 @@ router.route('/user/signup')
 		});
 	});
 
+/**
+ * @api {post} /admin/login Admin Login
+ * @apiVersion 0.0.1
+ * @apiGroup Authentication
+ * @apiName AdminLogin
+ * @apiExample Example usage:
+ *   url: http://localhost:3484/admin/login
+ *
+ *   body:
+ *   {
+ *     "email": "example@example.com",
+ *     "pass": "thisIsPassword"
+ *   }
+ *
+ * @apiParam {String} email Admins email.
+ * @apiParam {String} pass Admins password.
+ */
 router.route('/admin/login')
 	.post(function(req, res) {
 		Admin.findOne({ "email" : req.body.email }, function(err, admin) {
@@ -158,6 +213,27 @@ router.route('/admin/login')
 		});
 	});
 
+/**
+ * @api {post} /admin/signup Admin Signup
+ * @apiVersion 0.0.1
+ * @apiGroup Authentication
+ * @apiName AdminSignup
+ * @apiExample Example usage:
+ *   url: http://localhost:3484/admin/signup
+ *
+ *   body:
+ *   {
+ *     "name": "John Doe",
+ *     "email": "example@example.com",
+ *     "dob": "Thu Dec 16 1971 00:00:00 GMT+0600 (+06)",
+ *     "pass": "thisIsPassword"
+ *   }
+ *
+ * @apiParam {String} name Admins name.
+ * @apiParam {String} email Admins email.
+ * @apiParam {Date} dob Admins date of birth.
+ * @apiParam {String} pass Admins password.
+ */
 router.route('/admin/signup')
 	.post(function(req, res) {
 		Admin.findOne({ "email": req.body.email }, function(err, admin) {
