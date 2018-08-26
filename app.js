@@ -25,7 +25,7 @@ var dbOptions = {
   keepAlive: 200,
   autoReconnect: true,
   reconnectInterval: 3000,
-  useMongoClient: true
+  useNewUrlParser: true
 };
 
 var reconnectTries = 0;
