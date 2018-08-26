@@ -1,4 +1,8 @@
 var mongoose = require('mongoose');
+// patch to support MongoDB Server v3.5+
+mongoose.plugin(schema => {
+	schema.options.usePushEach = true;
+});
 var Schema = mongoose.Schema;
 
 var userSchema = new mongoose.Schema({
