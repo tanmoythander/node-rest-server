@@ -20,7 +20,7 @@ var createHash = function(password){
 
 /**
  * @api {post} /token/user/login User Login
- * @apiVersion 0.0.1
+ * @apiVersion 0.0.5
  * @apiGroup Authentication
  * @apiName UserLogin
  * @apiExample Example usage:
@@ -81,7 +81,7 @@ router.route('/user/login')
 
 /**
  * @api {post} /token/user/signup User Signup
- * @apiVersion 0.0.1
+ * @apiVersion 0.0.5
  * @apiGroup Authentication
  * @apiName UserSignup
  * @apiExample Example usage:
@@ -154,7 +154,7 @@ router.route('/user/signup')
 
 /**
  * @api {post} /token/admin/login Admin Login
- * @apiVersion 0.0.1
+ * @apiVersion 0.0.5
  * @apiGroup Authentication
  * @apiName AdminLogin
  * @apiExample Example usage:
@@ -215,7 +215,7 @@ router.route('/admin/login')
 
 /**
  * @api {post} /token/admin/signup Admin Signup
- * @apiVersion 0.0.1
+ * @apiVersion 0.0.5
  * @apiGroup Authentication
  * @apiName AdminSignup
  * @apiExample Example usage:

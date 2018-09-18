@@ -56,7 +56,7 @@ router.route('/posts')
 		/**
 		 * @api {post} /user/posts Create a post
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.0.1
+		 * @apiVersion 0.0.5
 		 * @apiGroup Posts
 		 * @apiName CreatePost
 		 * @apiExample Example usage:
@@ -116,7 +116,7 @@ router.route('/posts')
 		/**
 		 * @api {get} /user/posts Get all posts
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.0.1
+		 * @apiVersion 0.0.5
 		 * @apiGroup Posts
 		 * @apiName AllPosts
 		 * @apiExample Example usage:
@@ -162,7 +162,7 @@ router.route('/posts/:id')
 		/**
 		 * @api {post} /user/posts/:id Update a post
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.0.1
+		 * @apiVersion 0.0.5
 		 * @apiGroup Posts
 		 * @apiName UpdatePost
 		 * @apiExample Example usage:
@@ -211,7 +211,7 @@ router.route('/posts/:id')
 		/**
 		 * @api {get} /user/posts/:id Get a post
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.0.1
+		 * @apiVersion 0.0.5
 		 * @apiGroup Posts
 		 * @apiName GetPost
 		 * @apiExample Example usage:
@@ -241,7 +241,7 @@ router.route('/posts/:id')
 		/**
 		 * @api {delete} /user/posts/:id Delete a post
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.0.1
+		 * @apiVersion 0.0.5
 		 * @apiGroup Posts
 		 * @apiName DeletePost
 		 * @apiExample Example usage:
@@ -324,7 +324,7 @@ router.route('/profile')
 	/**
 	 * @api {get} /user/profile Get own profile
 	 * @apiHeader {String} access-key User authentication token.
-	 * @apiVersion 0.0.1
+	 * @apiVersion 0.0.5
 	 * @apiGroup UserProfile
 	 * @apiName GetUserProfile
 	 * @apiExample Example usage:
@@ -352,7 +352,7 @@ router.route('/profile')
 	/**
 	 * @api {put} /user/profile Update own profile
 	 * @apiHeader {String} access-key User authentication token.
-	 * @apiVersion 0.0.1
+	 * @apiVersion 0.0.5
 	 * @apiGroup UserProfile
 	 * @apiName UpdateUserProfile
 	 * @apiExample Example usage:
