@@ -6,6 +6,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var delay = require('delay');
+var debug = require('debug')('express:server');
+var http = require('http');
 
 
 //initialize mongoose schemas
@@ -31,58 +33,7 @@ var dbOptions = {
 var reconnectTries = 0;
 var trialDelay = 1;
 
-function delayString(seconds) {
-	var sec = seconds % 60;
-	seconds -= sec;
-	var min = seconds / 60;
-	var temp = min;
-	min %= 60;
-	var hour = (temp - min) / 60;
-
-	var str = '';
-	if (hour>0) {
-		str += hour;
-		str += ' hour'
-		if (hour>1) str += 's';
-		if (min>0 || sec>0) str += ', ';
-	}
-	if (min>0) {
-		str += min;
-		str += ' minute'
-		if (min>1) str += 's';
-		if (sec>0) str += ', ';
-	}
-	if (sec>0) {
-		str += sec;
-		str += ' second'
-		if (sec>1) str += 's';
-	}
-	return str; 
-}
-function dbConnect() {
-	console.log('Connecting database ...');
-	mongoose.connect(
-		// Replace CONNECTION_URI with your connection uri
-		'CONNECTION_URI',
-		dbOptions
-	).then(function() {
-		console.log('Database connection successful !!!');
-		console.log('Server is fully functional');
-	}, function(err) {
-		console.log('Database connection failed');
-
-		reconnectTries++;
-		console.log('Reconnecting after '+delayString(trialDelay));
-		console.log('Reconnect trial: '+reconnectTries);
-		console.log('');
-		delay(trialDelay*1000).then(function() {
-			trialDelay += trialDelay;
-			if (trialDelay>7200) trialDelay = 7200;
-			// enable recurtion
-			dbConnect();
-		});
-	});
-}
+// Connect to database
 dbConnect();
 
 // CORS Config
@@ -161,4 +112,153 @@ app.use(function(err, req, res, next) {
 	});
 });
 
-module.exports = app;
+//////////////// Initialize Server /////////////////
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3484');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+console.log('HTTP server running on, localhost:'+port);
+
+///////////////// Functions //////////////////
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+	var port = parseInt(val, 10);
+
+	if (isNaN(port)) {
+		// named pipe
+		return val;
+	}
+
+	if (port >= 0) {
+		// port number
+		return port;
+	}
+
+	return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+	if (error.syscall !== 'listen') {
+		throw error;
+	}
+
+	var bind = typeof port === 'string'
+		? 'Pipe ' + port
+		: 'Port ' + port;
+
+	// handle specific listen errors with friendly messages
+	switch (error.code) {
+		case 'EACCES':
+			console.error(bind + ' requires elevated privileges');
+			process.exit(1);
+			break;
+		case 'EADDRINUSE':
+			console.error(bind + ' is already in use');
+			process.exit(1);
+			break;
+		default:
+			throw error;
+	}
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+	var addr = server.address();
+	var bind = typeof addr === 'string'
+		? 'pipe ' + addr
+		: 'port ' + addr.port;
+	debug('Listening on ' + bind);
+}
+
+/**
+ * Create the delay string
+ * Requires time in second as parameter
+ * Returns the time string
+ */
+
+function delayString(seconds) {
+	var sec = seconds % 60;
+	seconds -= sec;
+	var min = seconds / 60;
+	var temp = min;
+	min %= 60;
+	var hour = (temp - min) / 60;
+
+	var str = '';
+	if (hour>0) {
+		str += hour;
+		str += ' hour'
+		if (hour>1) str += 's';
+		if (min>0 || sec>0) str += ', ';
+	}
+	if (min>0) {
+		str += min;
+		str += ' minute'
+		if (min>1) str += 's';
+		if (sec>0) str += ', ';
+	}
+	if (sec>0) {
+		str += sec;
+		str += ' second'
+		if (sec>1) str += 's';
+	}
+	return str; 
+}
+
+/**
+ * Connect to database
+ * Recursive reconnect trial upon connection failure
+ */
+
+function dbConnect() {
+	console.log('Connecting database ...');
+	mongoose.connect(
+		// Replace CONNECTION_URI with your connection uri
+		'CONNECTION_URI',
+		dbOptions
+	).then(function() {
+		console.log('Database connection successful !!!');
+		console.log('Server is fully functional');
+	}, function(err) {
+		console.log('Database connection failed');
+
+		reconnectTries++;
+		console.log('Reconnecting after '+delayString(trialDelay));
+		console.log('Reconnect trial: '+reconnectTries);
+		console.log('');
+		delay(trialDelay*1000).then(function() {
+			trialDelay += trialDelay;
+			if (trialDelay>7200) trialDelay = 7200;
+			// enable recurtion
+			dbConnect();
+		});
+	});
+}
