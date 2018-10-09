@@ -59,7 +59,7 @@ run the command
 	nodemon app.js
 	
 It will serve the project and restart on any file change
-It's good to remember that, "./bin/www" is the entry point to the app.
+It's good to remember that, "./app.js" is the entry point to the app.
 
 
 #### Please change your editor configuration like below before you start development
