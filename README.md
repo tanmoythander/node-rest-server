@@ -40,7 +40,7 @@ It will download all the dependencies.
 	npm start	
 or,
 
-	node ./bin/www
+	node app.js
 	
 It will serve the project on default port (3484).
 
