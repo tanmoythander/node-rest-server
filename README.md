@@ -35,31 +35,53 @@ run the command
 wait for it to be completed. It usually takes a minute or less to complete.
 It will download all the dependencies.
 
-### 4. Now run the command
+### 4. Configure the database
+You will need to setup a mongodb database by your own.  
+After setting up the database, go to the line 245 of [app.js](https://github.com/tanmoythander/node-rest-server/blob/master/app.js) and replace the **CONNECTION_URI** with your mongodb Connection URI.  
+If you dont know your Connection URI please [check here](https://docs.mongodb.com/manual/reference/connection-string/).
+
+### 5. Now run the command
 
 	npm start	
 or,
 
 	node app.js
 	
-It will serve the project on default port (3484).
+It will serve the project on default port (3484).  
+The documentation of the default API set can be found [here](https://tanmoythander.info/api/node-rest-server/).
 
 
 ## Developer Hint
+It's good to remember that, "./app.js" is the entry point to the app.
 
 ### Install nodemon
 run on any directory, recommended for development
 
-	sudo npm install -g nodemon
+	npm install -g nodemon
 
-
-### Now navigate to the project directory with cmd (terminal for mac)
+Now navigate to the project directory with cmd (terminal for mac)
 run the command
 
 	nodemon app.js
+
+or,
+
+	npm run dev
 	
-It will serve the project and restart on any file change
-It's good to remember that, "./app.js" is the entry point to the app.
+It will serve the project and restart the app on any file change.  
+
+### Build apidoc
+If you don't have apidoc installed as a global package,  
+run the command
+
+	npm install -g apidoc
+
+Now navigate to the project directory with cmd (terminal for mac)
+run the command
+
+	npm run apidoc
+
+It will serve the project and restart the app on any file change.  
 
 
 #### Please change your editor configuration like below before you start development
