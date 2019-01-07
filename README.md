@@ -52,7 +52,7 @@ The documentation of the default API set can be found [here](https://tanmoythand
 
 
 ## Developer Hint
-It's good to remember that, "./app.js" is the entry point to the app.
+It's good to remember that, **./app.js** is the entry point to the app.
 
 ### Install nodemon
 run on any directory, recommended for development
