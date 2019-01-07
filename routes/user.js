@@ -55,8 +55,9 @@ router.route('/posts')
 		// Create a new post
 		/**
 		 * @api {post} /user/posts Create a post
+ 		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.0.5
+		 * @apiVersion 0.1.0
 		 * @apiGroup Posts
 		 * @apiName CreatePost
 		 * @apiExample Example usage:
@@ -115,8 +116,9 @@ router.route('/posts')
 		// NOTE: Every single post by every user except deleted posts
 		/**
 		 * @api {get} /user/posts Get all posts
+ 		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.0.5
+		 * @apiVersion 0.1.0
 		 * @apiGroup Posts
 		 * @apiName AllPosts
 		 * @apiExample Example usage:
@@ -161,8 +163,9 @@ router.route('/posts/:id')
 
 		/**
 		 * @api {post} /user/posts/:id Update a post
+ 		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.0.5
+		 * @apiVersion 0.1.0
 		 * @apiGroup Posts
 		 * @apiName UpdatePost
 		 * @apiExample Example usage:
@@ -216,8 +219,9 @@ router.route('/posts/:id')
 		// get a post
 		/**
 		 * @api {get} /user/posts/:id Get a post
+ 		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.0.5
+		 * @apiVersion 0.1.0
 		 * @apiGroup Posts
 		 * @apiName GetPost
 		 * @apiExample Example usage:
@@ -246,8 +250,9 @@ router.route('/posts/:id')
 		// delete post
 		/**
 		 * @api {delete} /user/posts/:id Delete a post
+ 		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.0.5
+		 * @apiVersion 0.1.0
 		 * @apiGroup Posts
 		 * @apiName DeletePost
 		 * @apiExample Example usage:
@@ -334,8 +339,9 @@ router.route('/profile')
 	// get profile
 	/**
 	 * @api {get} /user/profile Get own profile
+	 * @apiHeader {String} Content-Type application/json
 	 * @apiHeader {String} access-key User authentication token.
-	 * @apiVersion 0.0.5
+	 * @apiVersion 0.1.0
 	 * @apiGroup UserProfile
 	 * @apiName GetUserProfile
 	 * @apiExample Example usage:
@@ -362,8 +368,9 @@ router.route('/profile')
 	// Update profile
 	/**
 	 * @api {put} /user/profile Update own profile
+	 * @apiHeader {String} Content-Type application/json
 	 * @apiHeader {String} access-key User authentication token.
-	 * @apiVersion 0.0.5
+	 * @apiVersion 0.1.0
 	 * @apiGroup UserProfile
 	 * @apiName UpdateUserProfile
 	 * @apiExample Example usage:
