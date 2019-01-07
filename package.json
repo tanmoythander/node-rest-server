@@ -4,7 +4,9 @@
   "version": "0.0.6",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "apidoc": "apidoc -i ./routes -o ./apidoc"
   },
   "dependencies": {
     "assert": "^1.4.1",
