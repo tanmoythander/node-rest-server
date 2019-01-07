@@ -20,7 +20,7 @@ var createHash = function(password){
 
 /**
  * @api {post} /token/user/login User Login
- * @apiVersion 0.0.5
+ * @apiVersion 0.1.0
  * @apiGroup Authentication
  * @apiName UserLogin
  * @apiExample Example usage:
@@ -37,24 +37,24 @@ var createHash = function(password){
  */
 router.route('/user/login')
 	.post(function(req, res) {
-		User.findOne({ "email" : req.body.email }, function(err, user) {
+		User.findOne({'email':req.body.email}, function(err, user) {
 			if (err) {
 				return res.send({
-					state: "failure",
-					message: "database error",
+					state: 'failure',
+					message: 'database error',
 					error: err
 				});
 			}
 			if (!user) {
 				return res.send({
-					state: "failure",
-					message: "email not registered"
+					state: 'failure',
+					message: 'email not registered'
 				});
 			}
 			if (!isValidPassword(user, req.body.pass)) {
 				return res.send({
-					state: "failure",
-					message: "email or password mismatch"
+					state: 'failure',
+					message: 'email or password mismatch'
 				});
 			}
 			user.password = undefined;
@@ -63,14 +63,14 @@ router.route('/user/login')
 				function(err, token) {
 					if (err) {
 						return res.send({
-							state: "failure",
-							message: "token generation failed",
+							state: 'failure',
+							message: 'token generation failed',
 							error: err
 						});
 					}
 					return res.send({
-						state: "success",
-						message: "Successfully logged in",
+						state: 'success',
+						message: 'Successfully logged in',
 						token: token,
 						user: user
 					});
@@ -102,30 +102,30 @@ router.route('/user/login')
  */
 router.route('/user/signup')
 	.post(function(req, res) {
-		User.findOne({ "email": req.body.email }, function(err, user) {
+		User.findOne({'email':req.body.email}, function(err, user) {
 			if (err) {
 				return res.send({
-					state: "failure",
-					message: "database error",
+					state: 'failure',
+					message: 'database error',
 					error: err
 				});
 			}
 			if (user) {
 				return res.send({
-					state: "failure",
-					message: "email already registered"
+					state: 'failure',
+					message: 'email already registered'
 				});
 			}
 			var newUser = new User();
 			newUser.name = req.body.name;
 			newUser.email = req.body.email;
-			newUser.profile.dob = req.body.profile.dob;
+			newUser.profile.dob = req.body.dob;
 			newUser.password = createHash(req.body.pass);
 			newUser.save(function(err, user) {
 				if (err) {
 					return res.send({
-						state: "failure",
-						message: "database error, failed to create user",
+						state: 'failure',
+						message: 'database error, failed to create user',
 						error: err
 					});
 				}
@@ -135,14 +135,14 @@ router.route('/user/signup')
 					function(err, token) {
 						if (err) {
 							return res.send({
-								state: "failure",
-								message: "token generation failed",
+								state: 'failure',
+								message: 'token generation failed',
 								error: err
 							});
 						}
 						return res.send({
-							state: "success",
-							message: "Successfully signed up",
+							state: 'success',
+							message: 'Successfully signed up',
 							token: token,
 							user: user
 						});
@@ -171,24 +171,24 @@ router.route('/user/signup')
  */
 router.route('/admin/login')
 	.post(function(req, res) {
-		Admin.findOne({ "email" : req.body.email }, function(err, admin) {
+		Admin.findOne({'email':req.body.email}, function(err, admin) {
 			if (err) {
 				return res.send({
-					state: "failure",
-					message: "database error",
+					state: 'failure',
+					message: 'database error',
 					error: err
 				});
 			}
 			if (!admin) {
 				return res.send({
-					state: "failure",
-					message: "email not registered"
+					state: 'failure',
+					message: 'email not registered'
 				});
 			}
 			if (!isValidPassword(admin, req.body.pass)) {
 				return res.send({
-					state: "failure",
-					message: "email or password mismatch"
+					state: 'failure',
+					message: 'email or password mismatch'
 				});
 			}
 			admin.password = undefined;
@@ -197,14 +197,14 @@ router.route('/admin/login')
 				function(err, token) {
 					if (err) {
 						return res.send({
-							state: "failure",
-							message: "token generation failed",
+							state: 'failure',
+							message: 'token generation failed',
 							error: err
 						});
 					}
 					return res.send({
-						state: "success",
-						message: "Successfully logged in",
+						state: 'success',
+						message: 'Successfully logged in',
 						token: token,
 						admin: admin
 					});
@@ -236,30 +236,30 @@ router.route('/admin/login')
  */
 router.route('/admin/signup')
 	.post(function(req, res) {
-		Admin.findOne({ "email": req.body.email }, function(err, admin) {
+		Admin.findOne({'email':req.body.email}, function(err, admin) {
 			if (err) {
 				return res.send({
-					state: "failure",
-					message: "database error",
+					state: 'failure',
+					message: 'database error',
 					error: err
 				});
 			}
 			if (admin) {
 				return res.send({
-					state: "failure",
-					message: "email already registered"
+					state: 'failure',
+					message: 'email already registered'
 				});
 			}
 			var newAdmin = new Admin();
 			newAdmin.name = req.body.name;
 			newAdmin.email = req.body.email;
-			newAdmin.profile.dob = req.body.profile.dob;
+			newAdmin.profile.dob = req.body.dob;
 			newAdmin.password = createHash(req.body.pass);
 			newAdmin.save(function(err, admin) {
 				if (err) {
 					return res.send({
-						state: "failure",
-						message: "database error, failed to create admin",
+						state: 'failure',
+						message: 'database error, failed to create admin',
 						error: err
 					});
 				}
@@ -269,14 +269,14 @@ router.route('/admin/signup')
 					function(err, token) {
 						if (err) {
 							return res.send({
-								state: "failure",
-								message: "token generation failed",
+								state: 'failure',
+								message: 'token generation failed',
 								error: err
 							});
 						}
 						return res.send({
-							state: "success",
-							message: "Successfully signed up",
+							state: 'success',
+							message: 'Successfully signed up',
 							token: token,
 							admin: admin
 						});
