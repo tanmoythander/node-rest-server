@@ -11,7 +11,7 @@ var User = mongoose.model('User');
 function postIsAvailable(req, res, next) {
 	User.findById(req.decoded._id, function(err, user) {
 		if (err) {
-			return res.status(424).send({
+			return res.status(500).send({
 				state: 'failure',
 				message: 'Database error'
 			});
@@ -76,7 +76,7 @@ router.route('/posts')
 			if (err) {
 				return res.status(500).send({
 					state: 'failure',
-					message: 'Creating post failed',
+					message: 'Database error',
 					error: err
 				});
 			}
@@ -85,7 +85,7 @@ router.route('/posts')
 				if (err) {
 					return res.status(500).send({
 						state: 'failure',
-						message: 'Error getting user',
+						message: 'Database error',
 						error: err
 					});
 				}
@@ -94,7 +94,7 @@ router.route('/posts')
 					if (err) {
 						return res.status(500).send({
 							state: 'failure',
-							message: 'Error populating user',
+							message: 'Database error',
 							error: err
 						});
 					}
@@ -130,7 +130,7 @@ router.route('/posts')
 			if (err) {
 				return res.status(500).send({
 					state: 'failure',
-					message: 'Something went wrong',
+					message: 'Database error',
 					error: err
 				});
 			}
@@ -181,12 +181,12 @@ router.route('/posts/:id')
 			if(err) {
 				return res.status(500).send({
 					state: 'failure',
-					message: 'Something went wrong',
+					message: 'Database error',
 					error: err
 				});
 			}
 			if(!post) {
-				return res.status(500).send({
+				return res.status(404).send({
 					state: 'failure',
 					message: 'Post not found'
 				});
@@ -196,7 +196,13 @@ router.route('/posts/:id')
 			post.updated_at = Date.now();
 
 			post.save(function(err, post){
-				if(err) return res.send(err);
+				if(err) {
+					return res.status(500).send({
+						state: 'failure',
+						message: 'Database error',
+						error: err
+					});
+				}
 
 				return res.status(200).send({
 					state: 'success',
@@ -224,7 +230,7 @@ router.route('/posts/:id')
 			if(err) {
 				return res.status(500).send({
 					state: 'failure',
-					message: 'Something went wrong',
+					message: 'Database error',
 					error: err
 				});
 			}
@@ -254,12 +260,12 @@ router.route('/posts/:id')
 			if(err) {
 				return res.status(500).send({
 					state: 'failure',
-					message: 'Something went wrong',
+					message: 'Database error',
 					error: err
 				});
 			}
 			if(!post) {
-				return res.status(500).send({
+				return res.status(404).send({
 					state: 'failure',
 					message: 'Post not found'
 				});
@@ -270,13 +276,18 @@ router.route('/posts/:id')
 			post.updated_at = Date.now();
 
 			post.save(function(err, post){
-				if(err) return res.send(err);
+				if(err) {
+					return res.status(500).send({
+						state: 'failure',
+						message: 'Database error'
+					});
+				}
 
 				User.findById(req.decoded._id, function(err, user) {
 					if (err) {
 						return res.status(500).send({
 							state: 'failure',
-							message: 'Error getting user',
+							message: 'Database error',
 							error: err
 						});
 					}
@@ -292,7 +303,7 @@ router.route('/posts/:id')
 						if (err) {
 							return res.status(500).send({
 								state: 'failure',
-								message: 'Error de-populating user',
+								message: 'Database error',
 								error: err
 							});
 						}

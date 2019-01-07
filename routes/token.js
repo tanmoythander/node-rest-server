@@ -19,67 +19,6 @@ var createHash = function(password){
 
 
 /**
- * @api {post} /token/user/login User Login
- * @apiVersion 0.1.0
- * @apiGroup Authentication
- * @apiName UserLogin
- * @apiExample Example usage:
- *   url: http://localhost:3484/token/user/login
- *
- *   body:
- *   {
- *     "email": "example@example.com",
- *     "pass": "thisIsPassword"
- *   }
- *
- * @apiParam {String} email Users email.
- * @apiParam {String} pass Users password.
- */
-router.route('/user/login')
-	.post(function(req, res) {
-		User.findOne({'email':req.body.email}, function(err, user) {
-			if (err) {
-				return res.send({
-					state: 'failure',
-					message: 'database error',
-					error: err
-				});
-			}
-			if (!user) {
-				return res.send({
-					state: 'failure',
-					message: 'email not registered'
-				});
-			}
-			if (!isValidPassword(user, req.body.pass)) {
-				return res.send({
-					state: 'failure',
-					message: 'email or password mismatch'
-				});
-			}
-			user.password = undefined;
-			jwt.sign(user, jwtSecret.user.secret,
-				{ expiresIn: jwtSecret.user.expiresIn },
-				function(err, token) {
-					if (err) {
-						return res.send({
-							state: 'failure',
-							message: 'token generation failed',
-							error: err
-						});
-					}
-					return res.send({
-						state: 'success',
-						message: 'Successfully logged in',
-						token: token,
-						user: user
-					});
-				}
-			);
-		});
-	});
-
-/**
  * @api {post} /token/user/signup User Signup
  * @apiVersion 0.0.5
  * @apiGroup Authentication
@@ -104,14 +43,14 @@ router.route('/user/signup')
 	.post(function(req, res) {
 		User.findOne({'email':req.body.email}, function(err, user) {
 			if (err) {
-				return res.send({
+				return res.status(500).send({
 					state: 'failure',
-					message: 'database error',
+					message: 'Database error',
 					error: err
 				});
 			}
 			if (user) {
-				return res.send({
+				return res.status(400).send({
 					state: 'failure',
 					message: 'email already registered'
 				});
@@ -123,9 +62,9 @@ router.route('/user/signup')
 			newUser.password = createHash(req.body.pass);
 			newUser.save(function(err, user) {
 				if (err) {
-					return res.send({
+					return res.status(500).send({
 						state: 'failure',
-						message: 'database error, failed to create user',
+						message: 'Database error, failed to create user',
 						error: err
 					});
 				}
@@ -134,13 +73,13 @@ router.route('/user/signup')
 					{ expiresIn: jwtSecret.user.expiresIn },
 					function(err, token) {
 						if (err) {
-							return res.send({
+							return res.status(500).send({
 								state: 'failure',
 								message: 'token generation failed',
 								error: err
 							});
 						}
-						return res.send({
+						return res.status(200).send({
 							state: 'success',
 							message: 'Successfully signed up',
 							token: token,
@@ -153,12 +92,12 @@ router.route('/user/signup')
 	});
 
 /**
- * @api {post} /token/admin/login Admin Login
- * @apiVersion 0.0.5
+ * @api {post} /token/user/login User Login
+ * @apiVersion 0.1.0
  * @apiGroup Authentication
- * @apiName AdminLogin
+ * @apiName UserLogin
  * @apiExample Example usage:
- *   url: http://localhost:3484/token/admin/login
+ *   url: http://localhost:3484/token/user/login
  *
  *   body:
  *   {
@@ -166,47 +105,47 @@ router.route('/user/signup')
  *     "pass": "thisIsPassword"
  *   }
  *
- * @apiParam {String} email Admins email.
- * @apiParam {String} pass Admins password.
+ * @apiParam {String} email Users email.
+ * @apiParam {String} pass Users password.
  */
-router.route('/admin/login')
+router.route('/user/login')
 	.post(function(req, res) {
-		Admin.findOne({'email':req.body.email}, function(err, admin) {
+		User.findOne({'email':req.body.email}, function(err, user) {
 			if (err) {
-				return res.send({
+				return res.status(500).send({
 					state: 'failure',
-					message: 'database error',
+					message: 'Database error',
 					error: err
 				});
 			}
-			if (!admin) {
-				return res.send({
+			if (!user) {
+				return res.status(404).send({
 					state: 'failure',
 					message: 'email not registered'
 				});
 			}
-			if (!isValidPassword(admin, req.body.pass)) {
-				return res.send({
+			if (!isValidPassword(user, req.body.pass)) {
+				return res.status(400).send({
 					state: 'failure',
 					message: 'email or password mismatch'
 				});
 			}
-			admin.password = undefined;
-			jwt.sign(admin, jwtSecret.admin.secret,
-				{ expiresIn: jwtSecret.admin.expiresIn },
+			user.password = undefined;
+			jwt.sign(user, jwtSecret.user.secret,
+				{ expiresIn: jwtSecret.user.expiresIn },
 				function(err, token) {
 					if (err) {
-						return res.send({
+						return res.status(500).send({
 							state: 'failure',
 							message: 'token generation failed',
 							error: err
 						});
 					}
-					return res.send({
+					return res.status(200).send({
 						state: 'success',
 						message: 'Successfully logged in',
 						token: token,
-						admin: admin
+						user: user
 					});
 				}
 			);
@@ -238,14 +177,14 @@ router.route('/admin/signup')
 	.post(function(req, res) {
 		Admin.findOne({'email':req.body.email}, function(err, admin) {
 			if (err) {
-				return res.send({
+				return res.status(500).send({
 					state: 'failure',
-					message: 'database error',
+					message: 'Database error',
 					error: err
 				});
 			}
 			if (admin) {
-				return res.send({
+				return res.status(400).send({
 					state: 'failure',
 					message: 'email already registered'
 				});
@@ -257,9 +196,9 @@ router.route('/admin/signup')
 			newAdmin.password = createHash(req.body.pass);
 			newAdmin.save(function(err, admin) {
 				if (err) {
-					return res.send({
+					return res.status(500).send({
 						state: 'failure',
-						message: 'database error, failed to create admin',
+						message: 'Database error, failed to create admin',
 						error: err
 					});
 				}
@@ -268,13 +207,13 @@ router.route('/admin/signup')
 					{ expiresIn: jwtSecret.admin.expiresIn },
 					function(err, token) {
 						if (err) {
-							return res.send({
+							return res.status(500).send({
 								state: 'failure',
 								message: 'token generation failed',
 								error: err
 							});
 						}
-						return res.send({
+						return res.status(200).send({
 							state: 'success',
 							message: 'Successfully signed up',
 							token: token,
@@ -283,6 +222,67 @@ router.route('/admin/signup')
 					}
 				);
 			});
+		});
+	});
+
+/**
+ * @api {post} /token/admin/login Admin Login
+ * @apiVersion 0.0.5
+ * @apiGroup Authentication
+ * @apiName AdminLogin
+ * @apiExample Example usage:
+ *   url: http://localhost:3484/token/admin/login
+ *
+ *   body:
+ *   {
+ *     "email": "example@example.com",
+ *     "pass": "thisIsPassword"
+ *   }
+ *
+ * @apiParam {String} email Admins email.
+ * @apiParam {String} pass Admins password.
+ */
+router.route('/admin/login')
+	.post(function(req, res) {
+		Admin.findOne({'email':req.body.email}, function(err, admin) {
+			if (err) {
+				return res.status(500).send({
+					state: 'failure',
+					message: 'Database error',
+					error: err
+				});
+			}
+			if (!admin) {
+				return res.status(404).send({
+					state: 'failure',
+					message: 'email not registered'
+				});
+			}
+			if (!isValidPassword(admin, req.body.pass)) {
+				return res.status(400).send({
+					state: 'failure',
+					message: 'email or password mismatch'
+				});
+			}
+			admin.password = undefined;
+			jwt.sign(admin, jwtSecret.admin.secret,
+				{ expiresIn: jwtSecret.admin.expiresIn },
+				function(err, token) {
+					if (err) {
+						return res.status(500).send({
+							state: 'failure',
+							message: 'token generation failed',
+							error: err
+						});
+					}
+					return res.status(200).send({
+						state: 'success',
+						message: 'Successfully logged in',
+						token: token,
+						admin: admin
+					});
+				}
+			);
 		});
 	});
 
