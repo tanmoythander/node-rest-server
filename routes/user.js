@@ -112,7 +112,7 @@ router.route('/posts')
 	})
 	.get(function(req, res) {
 		// get all posts
-		// NOTE: Every single post by every user deleted posts
+		// NOTE: Every single post by every user except deleted posts
 		/**
 		 * @api {get} /user/posts Get all posts
  		 * @apiHeader {String} access-key User authentication token.
