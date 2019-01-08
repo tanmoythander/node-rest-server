@@ -10,13 +10,16 @@ var logSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	message: {
+		type: String
+	},
 	_created_by: {
 		type: String,
-		ref: 'Admin'
+		required: true
 	},
 	created_at: {
-		type: Date,
-		default: Date.now
+		type: Number,
+		default: (new Date()).getTime()
 	}
 });
 

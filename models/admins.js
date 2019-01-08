@@ -20,12 +20,12 @@ var adminSchema = new mongoose.Schema({
 		required: true
 	},
 	created_at: {
-		type: Date,
-		default: Date.now
+		type: Number,
+		default: (new Date()).getTime()
 	},
 	profile: {
 		dob: {
-			type: Date,
+			type: Number,
 			required: true
 		},
 		address: {
@@ -47,12 +47,12 @@ var adminSchema = new mongoose.Schema({
 			default: 'not set'
 		},
 		updated_at: {
-			type: Date
+			type: Number
 		}
 	},
 	logs: [{
-		type: Schema.Types.ObjectId,
-		ref: 'Log'
+		type: String,
+		required: true
 	}]
 });
 

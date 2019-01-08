@@ -10,8 +10,6 @@ var userSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	googleId: String,
-	googleToken: String,
 	name: {
 		type: String,
 		required: true,
@@ -22,12 +20,12 @@ var userSchema = new mongoose.Schema({
 		required: true
 	},
 	created_at: {
-		type: Date,
-		default: Date.now
+		type: Number,
+		default: (new Date()).getTime()
 	},
 	profile: {
 		dob: {
-			type: Date,
+			type: Number,
 			required: true
 		},
 		address: {
@@ -49,12 +47,12 @@ var userSchema = new mongoose.Schema({
 			default: 'not set'
 		},
 		updated_at: {
-			type: Date
+			type: Number
 		}
 	},
 	posts: [{
-		type: Schema.Types.ObjectId,
-		ref: 'Post'
+		type: String,
+		required: true
 	}]
 });
 

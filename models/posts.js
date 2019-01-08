@@ -12,15 +12,15 @@ var postSchema = new mongoose.Schema({
 	},
 	_created_by: {
 		type: String,
-		ref: 'User'
+		required: true
 	},
 	created_at: {
-		type: Date,
-		default: Date.now
+		type: Number,
+		default: (new Date()).getTime()
 	},
 	updated_at: {
-		type: Date,
-		default: Date.now
+		type: Number,
+		default: (new Date()).getTime()
 	},
 	archieved: {
 		type: Boolean,
