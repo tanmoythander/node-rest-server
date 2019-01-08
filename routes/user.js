@@ -141,7 +141,7 @@ router.route('/posts')
 				posts: posts
 			});
 		});
-		query.select('-archived');
+		query.select('-archieved');
 		assert.ok(query.exec() instanceof require('q').makePromise);
 	});
 
@@ -168,7 +168,7 @@ router.route('/posts/:id')
 		 * @apiParam {String} text Post text.
 		 * @apiDescription User can update only his own post through this API.
 		 */
-		Post.findById(req.params.id, function(err, post){
+		Post.findById(req.params.id, function(err, post) {
 			if (err) {
 				return res.status(500).send({
 					state: 'failure',
@@ -190,7 +190,7 @@ router.route('/posts/:id')
 			}
 			post.text = req.body.text;
 			post.updated_at = Date.now();
-			post.save(function(err, post){
+			post.save(function(err, post) {
 				if(err) {
 					return res.status(500).send({
 						state: 'failure',
@@ -261,7 +261,7 @@ router.route('/posts/:id')
 		 *
 		 * @apiDescription User can delete only his own post through this API.
 		 */
-		Post.findById(req.params.id, function(err, post){
+		Post.findById(req.params.id, function(err, post) {
 			if (err) {
 				return res.status(500).send({
 					state: 'failure',
