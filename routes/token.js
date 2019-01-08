@@ -40,6 +40,29 @@ var createHash = function(password){
  * @apiParam {Date} dob Users date of birth.
  * @apiParam {String} pass Users password.
  */
+
+/**
+ * @api {post} /token/user/signup User Signup
+ * @apiHeader {String} Content-Type application/json
+ * @apiVersion 1.0.0
+ * @apiGroup Authentication
+ * @apiName UserSignup
+ * @apiExample Example usage:
+ *   url: http://localhost:3484/token/user/signup
+ *
+ *   body:
+ *   {
+ *     "name": "John Doe",
+ *     "email": "example@example.com",
+ *     "dob": 1546973225829,
+ *     "pass": "thisIsPassword"
+ *   }
+ *
+ * @apiParam {String} name Users name.
+ * @apiParam {String} email Users email.
+ * @apiParam {Number} dob Users date of birth(in millis).
+ * @apiParam {String} pass Users password.
+ */
 router.route('/user/signup')
 	.post(function(req, res) {
 		User.findOne({'email':req.body.email}, function(err, user) {
@@ -95,7 +118,7 @@ router.route('/user/signup')
 /**
  * @api {post} /token/user/login User Login
  * @apiHeader {String} Content-Type application/json
- * @apiVersion 0.1.0
+ * @apiVersion 1.0.0
  * @apiGroup Authentication
  * @apiName UserLogin
  * @apiExample Example usage:
@@ -176,6 +199,29 @@ router.route('/user/login')
  * @apiParam {Date} dob Admins date of birth.
  * @apiParam {String} pass Admins password.
  */
+
+/**
+ * @api {post} /token/admin/signup Admin Signup
+ * @apiHeader {String} Content-Type application/json
+ * @apiVersion 1.0.0
+ * @apiGroup Authentication
+ * @apiName AdminSignup
+ * @apiExample Example usage:
+ *   url: http://localhost:3484/token/admin/signup
+ *
+ *   body:
+ *   {
+ *     "name": "John Doe",
+ *     "email": "example@example.com",
+ *     "dob": 1546973225829,
+ *     "pass": "thisIsPassword"
+ *   }
+ *
+ * @apiParam {String} name Admins name.
+ * @apiParam {String} email Admins email.
+ * @apiParam {Number} dob Admins date of birth(in millis).
+ * @apiParam {String} pass Admins password.
+ */
 router.route('/admin/signup')
 	.post(function(req, res) {
 		Admin.findOne({'email':req.body.email}, function(err, admin) {
@@ -231,7 +277,7 @@ router.route('/admin/signup')
 /**
  * @api {post} /token/admin/login Admin Login
  * @apiHeader {String} Content-Type application/json
- * @apiVersion 0.1.0
+ * @apiVersion 1.0.0
  * @apiGroup Authentication
  * @apiName AdminLogin
  * @apiExample Example usage:

@@ -57,7 +57,7 @@ router.route('/posts')
 		 * @api {post} /user/posts Create a post
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.1.0
+		 * @apiVersion 1.0.0
 		 * @apiGroup Posts
 		 * @apiName CreatePost
 		 * @apiExample Example usage:
@@ -81,7 +81,7 @@ router.route('/posts')
 					error: err
 				});
 			}
-			var newPostEcho = post;
+			post.archieved = undefined;
 			User.findById(req.decoded._id, function(err, user) {
 				if (err) {
 					return res.status(500).send({
@@ -90,7 +90,7 @@ router.route('/posts')
 						error: err
 					});
 				}
-				user.posts.push(newPostEcho);
+				user.posts.push(post._id);
 				user.save(function(err, user) {
 					if (err) {
 						return res.status(500).send({
@@ -113,12 +113,12 @@ router.route('/posts')
 	})
 	.get(function(req, res) {
 		// get all posts
-		// NOTE: Every single post by every user except deleted posts
+		// NOTE: Every single post created by the user except deleted posts
 		/**
-		 * @api {get} /user/posts Get all posts
+		 * @api {get} /user/posts Get all user posts
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.1.0
+		 * @apiVersion 1.0.0
 		 * @apiGroup Posts
 		 * @apiName AllPosts
 		 * @apiExample Example usage:
@@ -127,7 +127,8 @@ router.route('/posts')
 		 * @apiDescription Every single post by every user except deleted posts.
 		 */
 		var query = Post.find({
-			'_created_by': req.decoded._id
+			'_created_by': req.decoded._id,
+			'archieved': false
 		}, function(err, posts) {
 			if (err) {
 				return res.status(500).send({
@@ -136,22 +137,13 @@ router.route('/posts')
 					error: err
 				});
 			}
-			var i = 0;
-			while (i<posts.length) {
-				if (posts[i].archieved == true) {
-					posts.splice(i, 1);
-					continue;
-				}
-				i++;
-			}
 			return res.status(200).send({
 				state: 'success',
 				message: 'Returned all posts',
 				posts: posts
 			});
 		});
-
-
+		query.select('-archived');
 		assert.ok(query.exec() instanceof require('q').makePromise);
 	});
 
@@ -165,7 +157,7 @@ router.route('/posts/:id')
 		 * @api {post} /user/posts/:id Update a post
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.1.0
+		 * @apiVersion 1.0.0
 		 * @apiGroup Posts
 		 * @apiName UpdatePost
 		 * @apiExample Example usage:
@@ -176,28 +168,31 @@ router.route('/posts/:id')
 		 *     "text": "Hello world !!!"
 		 *   }
 		 *
-		 * @apiParam {String} id ObjectId of the post object. See user object to know available post IDs.
 		 * @apiParam {String} text Post text.
 		 * @apiDescription User can update only his own post through this API.
 		 */
 		Post.findById(req.params.id, function(err, post){
-			if(err) {
+			if (err) {
 				return res.status(500).send({
 					state: 'failure',
 					message: 'Database error',
 					error: err
 				});
 			}
-			if(!post) {
+			if (!post) {
 				return res.status(404).send({
 					state: 'failure',
 					message: 'Post not found'
 				});
 			}
-
+			if (post.archieved) {
+				return res.status(404).send({
+					state: 'failure',
+					message: 'Post is already deleted'
+				});
+			}
 			post.text = req.body.text;
 			post.updated_at = Date.now();
-
 			post.save(function(err, post){
 				if(err) {
 					return res.status(500).send({
@@ -206,7 +201,7 @@ router.route('/posts/:id')
 						error: err
 					});
 				}
-
+				post.archieved = undefined;
 				return res.status(200).send({
 					state: 'success',
 					message: 'Successfully updated post',
@@ -221,24 +216,35 @@ router.route('/posts/:id')
 		 * @api {get} /user/posts/:id Get a post
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.1.0
+		 * @apiVersion 1.0.0
 		 * @apiGroup Posts
 		 * @apiName GetPost
 		 * @apiExample Example usage:
 		 *   url: http://localhost:3484/user/posts/:id
 		 *
-		 * @apiParam {String} id ObjectId of the post object. See user object to know available post IDs.
 		 * @apiDescription User can get only his own post through this API.
 		 */
 		Post.findById(req.params.id, function(err, post) {
-			if(err) {
+			if (err) {
 				return res.status(500).send({
 					state: 'failure',
 					message: 'Database error',
 					error: err
 				});
 			}
-
+			if (!post) {
+				return res.status(404).send({
+					state: 'failure',
+					message: 'Post not found'
+				});
+			}
+			if (post.archieved) {
+				return res.status(404).send({
+					state: 'failure',
+					message: 'Post is already deleted'
+				});
+			}
+			post.archieved = undefined;
 			return res.status(200).send({
 				state: 'success',
 				message: 'Returned post',
@@ -252,36 +258,38 @@ router.route('/posts/:id')
 		 * @api {delete} /user/posts/:id Delete a post
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 0.1.0
+		 * @apiVersion 1.0.0
 		 * @apiGroup Posts
 		 * @apiName DeletePost
 		 * @apiExample Example usage:
 		 *   url: http://localhost:3484/user/posts/:id
 		 *
-		 * @apiParam {String} id ObjectId of the post object. See user object to know available post IDs.
 		 * @apiDescription User can delete only his own post through this API.
 		 */
 		Post.findById(req.params.id, function(err, post){
-			if(err) {
+			if (err) {
 				return res.status(500).send({
 					state: 'failure',
 					message: 'Database error',
 					error: err
 				});
 			}
-			if(!post) {
+			if (!post) {
 				return res.status(404).send({
 					state: 'failure',
 					message: 'Post not found'
 				});
 			}
-
-
+			if (post.archieved) {
+				return res.status(404).send({
+					state: 'failure',
+					message: 'Post is already deleted'
+				});
+			}
 			post.archieved = true;
-			post.updated_at = Date.now();
-
-			post.save(function(err, post){
-				if(err) {
+			post.updated_at = (new Date()).getTime();
+			post.save(function(err, post) {
+				if (err) {
 					return res.status(500).send({
 						state: 'failure',
 						message: 'Database error'
@@ -296,14 +304,7 @@ router.route('/posts/:id')
 							error: err
 						});
 					}
-					var i = 0;
-					while (i<user.posts.length) {
-						if (user.posts[i] == req.params.id) {
-							user.posts.splice(i, 1);
-							break;
-						}
-						i++;
-					}
+					user.posts.splice(user.posts.indexOf(req.params.id), 1);
 					user.save(function(err, user) {
 						if (err) {
 							return res.status(500).send({
@@ -341,7 +342,7 @@ router.route('/profile')
 	 * @api {get} /user/profile Get own profile
 	 * @apiHeader {String} Content-Type application/json
 	 * @apiHeader {String} access-key User authentication token.
-	 * @apiVersion 0.1.0
+	 * @apiVersion 1.0.0
 	 * @apiGroup UserProfile
 	 * @apiName GetUserProfile
 	 * @apiExample Example usage:
@@ -394,6 +395,35 @@ router.route('/profile')
 	 * @apiParam {String} profile.phone Phone number.
 	 * @apiParam {Date} profile.dob Date of birth.
 	 */
+
+	/**
+	 * @api {put} /user/profile Update own profile
+	 * @apiHeader {String} Content-Type application/json
+	 * @apiHeader {String} access-key User authentication token.
+	 * @apiVersion 1.0.0
+	 * @apiGroup UserProfile
+	 * @apiName UpdateUserProfile
+	 * @apiExample Example usage:
+	 *   url: http://localhost:3484/user/profile
+	 *
+	 *   body:
+	 *   {
+	 *     "name": "John Doe",
+	 *     "profile": {
+	 *       "address": "Sylhet, BD",
+	 *       "company": "Owlette",
+	 *       "phone": "+8801413667755",
+	 *       "dob": 1546973225829
+	 *     }
+	 *   }
+	 *
+	 * @apiParam {String} name User's name.
+	 * @apiParam {Object} profile Profile object.
+	 * @apiParam {String} profile.address Address.
+	 * @apiParam {String} profile.company Company.
+	 * @apiParam {String} profile.phone Phone number.
+	 * @apiParam {Number} profile.dob Date of birth(in millis).
+	 */
 	.put(function(req, res) {
 		User.findById(req.decoded._id, function(err, user) {
 			if (err) {
@@ -409,7 +439,7 @@ router.route('/profile')
 			user.profile.address = req.body.profile.address;
 			user.profile.company = req.body.profile.company;
 			user.profile.phone = req.body.profile.phone;
-			user.profile.updated_at = Date.now();
+			user.profile.updated_at = (new Date()).getTime();
 
 			user.save(function(err, user) {
 				if (err) {

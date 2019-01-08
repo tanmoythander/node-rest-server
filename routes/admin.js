@@ -25,7 +25,7 @@ router.route('/profile')
 	 * @api {get} /admin/profile Get admin profile
 	 * @apiHeader {String} Content-Type application/json
 	 * @apiHeader {String} access-key Admin authentication token.
-	 * @apiVersion 0.1.0
+	 * @apiVersion 1.0.0
 	 * @apiGroup AdminProfile
 	 * @apiName GetAdminProfile
 	 * @apiExample Example usage:
@@ -78,6 +78,35 @@ router.route('/profile')
 	 * @apiParam {String} profile.phone Phone number.
 	 * @apiParam {Date} profile.dob Date of birth.
 	 */
+
+	/**
+	 * @api {put} /admin/profile Update admin profile
+	 * @apiHeader {String} Content-Type application/json
+	 * @apiHeader {String} access-key Admin authentication token.
+	 * @apiVersion 1.0.0
+	 * @apiGroup AdminProfile
+	 * @apiName UpdateAdminProfile
+	 * @apiExample Example usage:
+	 *   url: http://localhost:3484/admin/profile
+	 *
+	 *   body:
+	 *   {
+	 *     "name": "John Doe",
+	 *     "profile": {
+	 *       "address": "Sylhet, BD",
+	 *       "company": "Owlette",
+	 *       "phone": "+8801413667755",
+	 *       "dob": 1546973225829
+	 *     }
+	 *   }
+	 *
+	 * @apiParam {String} name Admin's name.
+	 * @apiParam {Object} profile Profile object.
+	 * @apiParam {String} profile.address Address.
+	 * @apiParam {String} profile.company Company.
+	 * @apiParam {String} profile.phone Phone number.
+	 * @apiParam {Date} profile.dob Date of birth(in millis).
+	 */
 	.put(function(req, res) {
 		Admin.findById(req.decoded._id, function(err, admin) {
 			if (err) {
@@ -93,7 +122,7 @@ router.route('/profile')
 			admin.profile.address = req.body.profile.address;
 			admin.profile.company = req.body.profile.company;
 			admin.profile.phone = req.body.profile.phone;
-			admin.profile.updated_at = Date.now();
+			admin.profile.updated_at = (new Date()).getTime();
 
 			admin.save(function(err, admin) {
 				if (err) {
