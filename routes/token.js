@@ -23,7 +23,6 @@ var createHash = function(password){
  * @apiHeader {String} Content-Type application/json
  * @apiVersion 0.1.0
  * @apiGroup Authentication
- * @apiName UserSignup
  * @apiExample Example usage:
  *   url: http://localhost:3484/token/user/signup
  *
@@ -46,7 +45,6 @@ var createHash = function(password){
  * @apiHeader {String} Content-Type application/json
  * @apiVersion 1.0.0
  * @apiGroup Authentication
- * @apiName UserSignup
  * @apiExample Example usage:
  *   url: http://localhost:3484/token/user/signup
  *
@@ -120,7 +118,6 @@ router.route('/user/signup')
  * @apiHeader {String} Content-Type application/json
  * @apiVersion 1.0.0
  * @apiGroup Authentication
- * @apiName UserLogin
  * @apiExample Example usage:
  *   url: http://localhost:3484/token/user/login
  *
@@ -182,7 +179,6 @@ router.route('/user/login')
  * @apiHeader {String} Content-Type application/json
  * @apiVersion 0.1.0
  * @apiGroup Authentication
- * @apiName AdminSignup
  * @apiExample Example usage:
  *   url: http://localhost:3484/token/admin/signup
  *
@@ -205,7 +201,6 @@ router.route('/user/login')
  * @apiHeader {String} Content-Type application/json
  * @apiVersion 1.0.0
  * @apiGroup Authentication
- * @apiName AdminSignup
  * @apiExample Example usage:
  *   url: http://localhost:3484/token/admin/signup
  *
@@ -279,7 +274,6 @@ router.route('/admin/signup')
  * @apiHeader {String} Content-Type application/json
  * @apiVersion 1.0.0
  * @apiGroup Authentication
- * @apiName AdminLogin
  * @apiExample Example usage:
  *   url: http://localhost:3484/token/admin/login
  *
