@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+//var favicon = require('serve-favicon');
 var cors = require('cors');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -41,16 +41,16 @@ var whitelist = [
 	undefined, // POSTMAN Support
 	'http://localhost:XXXX', // DEV Support
 	'https://example.com' // Production Support
-]
+];
 var corsOptions = {
 	origin: function (origin, callback) {
 		if (whitelist.indexOf(origin) !== -1) {
-			callback(null, true)
+			callback(null, true);
 		} else {
-			callback(new Error(origin + ' is not allowed to access'))
+			callback(new Error(origin + ' is not allowed to access'));
 		}
 	}
-}
+};
 
 // start express app
 var app = express();
@@ -91,6 +91,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+	// eslint-disable-next-line no-unused-vars
 	app.use(function(err, req, res, next) {
 		res.status(err.status || 500);
 		res.send({
@@ -103,6 +104,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
+// eslint-disable-next-line no-unused-vars
 app.use(function(err, req, res, next) {
 	res.status(err.status || 500);
 	res.send({
@@ -134,6 +136,7 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+// eslint-disable-next-line no-console
 console.log('HTTP server running on, localhost:'+port);
 
 ///////////////// Functions //////////////////
@@ -173,16 +176,18 @@ function onError(error) {
 
 	// handle specific listen errors with friendly messages
 	switch (error.code) {
-		case 'EACCES':
-			console.error(bind + ' requires elevated privileges');
-			process.exit(1);
-			break;
-		case 'EADDRINUSE':
-			console.error(bind + ' is already in use');
-			process.exit(1);
-			break;
-		default:
-			throw error;
+	case 'EACCES':
+		// eslint-disable-next-line no-console
+		console.error(bind + ' requires elevated privileges');
+		process.exit(1);
+		break;
+	case 'EADDRINUSE':
+		// eslint-disable-next-line no-console
+		console.error(bind + ' is already in use');
+		process.exit(1);
+		break;
+	default:
+		throw error;
 	}
 }
 
@@ -215,22 +220,22 @@ function delayString(seconds) {
 	var str = '';
 	if (hour>0) {
 		str += hour;
-		str += ' hour'
+		str += ' hour';
 		if (hour>1) str += 's';
 		if (min>0 || sec>0) str += ', ';
 	}
 	if (min>0) {
 		str += min;
-		str += ' minute'
+		str += ' minute';
 		if (min>1) str += 's';
 		if (sec>0) str += ', ';
 	}
 	if (sec>0) {
 		str += sec;
-		str += ' second'
+		str += ' second';
 		if (sec>1) str += 's';
 	}
-	return str; 
+	return str;
 }
 
 /**
@@ -238,6 +243,7 @@ function delayString(seconds) {
  * Recursive reconnect trial upon connection failure
  */
 
+/* eslint-disable no-console */
 function dbConnect() {
 	console.log('Connecting database ...');
 	mongoose.connect(
@@ -247,6 +253,7 @@ function dbConnect() {
 	).then(function() {
 		console.log('Database connection successful !!!');
 		console.log('Server is fully functional');
+		// eslint-disable-next-line no-unused-vars
 	}, function(err) {
 		console.log('Database connection failed');
 
@@ -262,3 +269,4 @@ function dbConnect() {
 		});
 	});
 }
+/* eslint-disable no-console */

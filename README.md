@@ -81,7 +81,20 @@ run the command
 
 	npm run apidoc
 
-It will serve the project and restart the app on any file change.  
+It will build the apidoc in the directory **./apidoc**.  
+
+### Lint source
+If you don't have eslint installed as a global package,  
+run the command
+
+	npm install -g eslint
+
+Now navigate to the project directory with cmd (terminal for mac)
+run the command
+
+	npm run eslint
+
+It will show warnings and errors if there is any formatting issue. In case of no formatting issue, it will show nothing.  
 
 
 #### Please change your editor configuration like below before you start development

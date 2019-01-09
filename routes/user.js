@@ -40,14 +40,12 @@ router.use('/posts/:id', postIsAvailable);
 router.use('/profile', auth.verifyUser);
 
 
-
-
 /////////////////
-// Post API 
+// Post API
 // /post/.....
 /////////////////
 
-// API for 
+// API for
 // 	creating a post
 // 	get all posts
 router.route('/posts')
@@ -57,7 +55,7 @@ router.route('/posts')
 		 * @api {post} /user/posts Create a post
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 1.0.0
+		 * @apiVersion 1.1.0
 		 * @apiGroup UserPosts
 		 * @apiExample Example usage:
 		 *   url: http://localhost:3484/user/posts
@@ -98,16 +96,16 @@ router.route('/posts')
 							error: err
 						});
 					}
+					user.password = undefined;
+					return res.status(200).send({
+						state: 'success',
+						message: 'Successfully posted',
+						post: post,
+						more: 'User has been populated',
+						user: user
+					});
 				});
 			});
-
-			return res.status(200).send({
-				state: 'success',
-				message: 'Successfully posted',
-				post: post,
-				more: 'User has been populated'
-			});
-
 		});
 	})
 	.get(function(req, res) {
@@ -117,7 +115,7 @@ router.route('/posts')
 		 * @api {get} /user/posts Get all user posts
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 1.0.0
+		 * @apiVersion 1.1.0
 		 * @apiGroup UserPosts
 		 * @apiExample Example usage:
 		 *   url: http://localhost:3484/user/posts
@@ -155,7 +153,7 @@ router.route('/posts/:id')
 		 * @api {post} /user/posts/:id Update a post
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 1.0.0
+		 * @apiVersion 1.1.0
 		 * @apiGroup UserPosts
 		 * @apiExample Example usage:
 		 *   url: http://localhost:3484/user/posts/:id
@@ -213,7 +211,7 @@ router.route('/posts/:id')
 		 * @api {get} /user/posts/:id Get a post
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 1.0.0
+		 * @apiVersion 1.1.0
 		 * @apiGroup UserPosts
 		 * @apiExample Example usage:
 		 *   url: http://localhost:3484/user/posts/:id
@@ -254,7 +252,7 @@ router.route('/posts/:id')
 		 * @api {delete} /user/posts/:id Delete a post
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 1.0.0
+		 * @apiVersion 1.1.0
 		 * @apiGroup UserPosts
 		 * @apiExample Example usage:
 		 *   url: http://localhost:3484/user/posts/:id
@@ -283,7 +281,7 @@ router.route('/posts/:id')
 			}
 			post.archieved = true;
 			post.updated_at = (new Date()).getTime();
-			post.save(function(err, post) {
+			post.save(function(err) {
 				if (err) {
 					return res.status(500).send({
 						state: 'failure',
@@ -308,23 +306,22 @@ router.route('/posts/:id')
 								error: err
 							});
 						}
+						user.password = undefined;
+						return res.status(200).send({
+							state: 'success',
+							message: 'Successfully deleted post',
+							more: 'User has been de-populated',
+							user: user
+						});
 					});
-				});
-
-				return res.status(200).send({
-					state: 'success',
-					message: 'Successfully deleted post',
-					more: 'User has been de-populated'
 				});
 			});
 		});
 	});
 
 
-
-
 /////////////////
-// Profile API 
+// Profile API
 // /profile
 /////////////////
 
@@ -332,12 +329,11 @@ router.route('/posts/:id')
 //  get profile
 //  update profile
 router.route('/profile')
-	// get profile
 	/**
 	 * @api {get} /user/profile Get own profile
 	 * @apiHeader {String} Content-Type application/json
 	 * @apiHeader {String} access-key User authentication token.
-	 * @apiVersion 1.0.0
+	 * @apiVersion 1.1.0
 	 * @apiGroup UserProfile
 	 * @apiExample Example usage:
 	 *   url: http://localhost:3484/user/profile
@@ -360,7 +356,6 @@ router.route('/profile')
 			});
 		});
 	})
-	// Update profile
 	/**
 	 * @api {put} /user/profile Update own profile
 	 * @apiHeader {String} Content-Type application/json
@@ -393,7 +388,7 @@ router.route('/profile')
 	 * @api {put} /user/profile Update own profile
 	 * @apiHeader {String} Content-Type application/json
 	 * @apiHeader {String} access-key User authentication token.
-	 * @apiVersion 1.0.0
+	 * @apiVersion 1.1.0
 	 * @apiGroup UserProfile
 	 * @apiExample Example usage:
 	 *   url: http://localhost:3484/user/profile
