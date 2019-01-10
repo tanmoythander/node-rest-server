@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js",
+    "dev": "nodemon app.js --exec 'npm run eslint && node'",
     "apidoc": "apidoc -i ./routes -o ./apidoc",
     "eslint": "eslint app.js ./models ./routes ./components ./secrets"
   },
@@ -25,8 +25,7 @@
     "mongoose": "^5.4.2",
     "morgan": "^1.9.1",
     "path": "^0.12.7",
-    "q": "^1.5.0",
-    "serve-favicon": "~2.4.2"
+    "q": "^1.5.0"
   },
   "devDependencies": {
     "eslint": "^5.12.0",

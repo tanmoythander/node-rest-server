@@ -24,7 +24,7 @@ router.route('/profile')
 	 * @api {get} /admin/profile Get admin profile
 	 * @apiHeader {String} Content-Type application/json
 	 * @apiHeader {String} access-key Admin authentication token.
-	 * @apiVersion 1.1.0
+	 * @apiVersion 1.2.0
 	 * @apiGroup AdminProfile
 	 * @apiExample Example usage:
 	 *   url: http://localhost:3484/admin/profile
@@ -79,7 +79,7 @@ router.route('/profile')
 	 * @api {put} /admin/profile Update admin profile
 	 * @apiHeader {String} Content-Type application/json
 	 * @apiHeader {String} access-key Admin authentication token.
-	 * @apiVersion 1.1.0
+	 * @apiVersion 1.2.0
 	 * @apiGroup AdminProfile
 	 * @apiExample Example usage:
 	 *   url: http://localhost:3484/admin/profile

@@ -55,7 +55,7 @@ router.route('/posts')
 		 * @api {post} /user/posts Create a post
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 1.1.0
+		 * @apiVersion 1.2.0
 		 * @apiGroup UserPosts
 		 * @apiExample Example usage:
 		 *   url: http://localhost:3484/user/posts
@@ -115,7 +115,7 @@ router.route('/posts')
 		 * @api {get} /user/posts Get all user posts
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 1.1.0
+		 * @apiVersion 1.2.0
 		 * @apiGroup UserPosts
 		 * @apiExample Example usage:
 		 *   url: http://localhost:3484/user/posts
@@ -153,7 +153,7 @@ router.route('/posts/:id')
 		 * @api {post} /user/posts/:id Update a post
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 1.1.0
+		 * @apiVersion 1.2.0
 		 * @apiGroup UserPosts
 		 * @apiExample Example usage:
 		 *   url: http://localhost:3484/user/posts/:id
@@ -211,7 +211,7 @@ router.route('/posts/:id')
 		 * @api {get} /user/posts/:id Get a post
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 1.1.0
+		 * @apiVersion 1.2.0
 		 * @apiGroup UserPosts
 		 * @apiExample Example usage:
 		 *   url: http://localhost:3484/user/posts/:id
@@ -252,7 +252,7 @@ router.route('/posts/:id')
 		 * @api {delete} /user/posts/:id Delete a post
  		 * @apiHeader {String} Content-Type application/json
  		 * @apiHeader {String} access-key User authentication token.
-		 * @apiVersion 1.1.0
+		 * @apiVersion 1.2.0
 		 * @apiGroup UserPosts
 		 * @apiExample Example usage:
 		 *   url: http://localhost:3484/user/posts/:id
@@ -333,7 +333,7 @@ router.route('/profile')
 	 * @api {get} /user/profile Get own profile
 	 * @apiHeader {String} Content-Type application/json
 	 * @apiHeader {String} access-key User authentication token.
-	 * @apiVersion 1.1.0
+	 * @apiVersion 1.2.0
 	 * @apiGroup UserProfile
 	 * @apiExample Example usage:
 	 *   url: http://localhost:3484/user/profile
@@ -388,7 +388,7 @@ router.route('/profile')
 	 * @api {put} /user/profile Update own profile
 	 * @apiHeader {String} Content-Type application/json
 	 * @apiHeader {String} access-key User authentication token.
-	 * @apiVersion 1.1.0
+	 * @apiVersion 1.2.0
 	 * @apiGroup UserProfile
 	 * @apiExample Example usage:
 	 *   url: http://localhost:3484/user/profile

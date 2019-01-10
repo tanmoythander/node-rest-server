@@ -43,7 +43,7 @@ var createHash = function(password) {
 /**
  * @api {post} /token/user/signup User Signup
  * @apiHeader {String} Content-Type application/json
- * @apiVersion 1.1.0
+ * @apiVersion 1.2.0
  * @apiGroup Authentication
  * @apiExample Example usage:
  *   url: http://localhost:3484/token/user/signup
@@ -116,7 +116,7 @@ router.route('/user/signup')
 /**
  * @api {post} /token/user/login User Login
  * @apiHeader {String} Content-Type application/json
- * @apiVersion 1.1.0
+ * @apiVersion 1.2.0
  * @apiGroup Authentication
  * @apiExample Example usage:
  *   url: http://localhost:3484/token/user/login
@@ -199,7 +199,7 @@ router.route('/user/login')
 /**
  * @api {post} /token/admin/signup Admin Signup
  * @apiHeader {String} Content-Type application/json
- * @apiVersion 1.1.0
+ * @apiVersion 1.2.0
  * @apiGroup Authentication
  * @apiExample Example usage:
  *   url: http://localhost:3484/token/admin/signup
@@ -272,7 +272,7 @@ router.route('/admin/signup')
 /**
  * @api {post} /token/admin/login Admin Login
  * @apiHeader {String} Content-Type application/json
- * @apiVersion 1.1.0
+ * @apiVersion 1.2.0
  * @apiGroup Authentication
  * @apiExample Example usage:
  *   url: http://localhost:3484/token/admin/login
