@@ -13,7 +13,7 @@
     "assert": "^1.4.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
-    "bson": "^1.1.0",
+    "bson": "^1.1.4",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.5",
     "debug": "^2.6.4",
